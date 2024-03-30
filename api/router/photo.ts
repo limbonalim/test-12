@@ -10,7 +10,7 @@ const photoRouter = Router();
 
 photoRouter.get('/', check, async (req: RequestWithUser, res, next) => {
 	try {
-		const result = await Photo.find();
+		const result = await Photo.find().populate('author', 'displayName');
 		if (!result[0]) {
 			return res.status(404).send('Not found!');
 		}

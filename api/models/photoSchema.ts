@@ -5,6 +5,7 @@ const photoSchema = new Schema<IPhotoFields, IPhotoModel, unknown>({
 	author: {
 		type: Schema.Types.ObjectId,
 		required: true,
+		ref: 'users',
 	},
 	title: {
 		type: String,

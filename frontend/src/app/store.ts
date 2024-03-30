@@ -11,6 +11,7 @@ import {
 	persistStore,
 } from 'redux-persist';
 import { usersReducers } from '../feachers/Users/usersSlice';
+import { photoReducer } from '../feachers/Home/photoSlice';
 
 const usersPersistConfig = {
 	key: 'spotify:users',
@@ -19,6 +20,7 @@ const usersPersistConfig = {
 };
 
 const rootReducer = combineReducers({
+	photo: photoReducer,
 	users: persistReducer(usersPersistConfig, usersReducers),
 });
 

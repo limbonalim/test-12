@@ -33,3 +33,12 @@ export interface IUser {
 	role: string;
 	token: string;
 }
+
+export type UserMutation = Pick<IUser, '_id' | 'displayName'>;
+
+export interface IPhoto {
+	_id: string;
+	author: UserMutation;
+	title: string;
+	image: string;
+}
