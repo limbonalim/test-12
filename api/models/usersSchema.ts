@@ -11,21 +11,6 @@ export enum Roles {
 }
 
 const usersSchema = new Schema<IUserFields, IUserModel, IUserMethods>({
-	username: {
-		type: String,
-		unique: true,
-		validator: async function (
-			this: HydratedDocument<IUserFields>,
-			username: string,
-		): Promise<boolean> {
-			if (!this.isModified('username')) return true;
-			const user: HydratedDocument<IUserFields> | null = await User.findOne({
-				username,
-			});
-			return !user;
-		},
-		message: 'This username is already registered!',
-	},
 	email: {
 		type: String,
 		required: true,
