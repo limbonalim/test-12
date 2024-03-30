@@ -1,4 +1,4 @@
-import { Alert, Box, Button, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FileInput from '../../../components/UI/FileInput/FileInput';
@@ -15,7 +15,7 @@ export interface IFormPhoto {
 const PhotoForm = () => {
 	const [state, setState] = useState<IFormPhoto>({ title: '', image: null });
 	const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 	const isLoading = useAppSelector(selectIsCreateLoading);
 	const error = useAppSelector(selectCreateError);
 
@@ -43,40 +43,49 @@ const PhotoForm = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		await dispatch(createPhoto(state)).unwrap();
-    await dispatch(getAll());
-    navigate('/');
+		await dispatch(getAll());
+		navigate('/');
 	};
 
 	return (
-		<Protected>
-			{getFieldError('image') && (
-				<Alert security="error" sx={{ mb: 2 }}>
-					{getFieldError('image')}
-				</Alert>
-			)}
-			<Box
-				component="form"
-				onSubmit={handleSubmit}
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					gap: 2,
-				}}
-			>
-				<Typography>Add Photo</Typography>
-				<TextField
-					name="title"
-					label="Title"
-					value={state.title}
-					onChange={handleChange}
-					required
-				/>
-				<FileInput onChange={handleImageChange} label="Image" name="image" />
-				<Button type="submit" disabled={isLoading}>
-					Save
-				</Button>
-			</Box>
-		</Protected>
+		<Grid container>
+			<Grid item xs={12} sm={8} lg={6} md={6} xl={6}>
+				<Protected>
+					{getFieldError('image') && (
+						<Alert security="error" sx={{ mb: 2 }}>
+							{getFieldError('image')}
+						</Alert>
+					)}
+					<Box
+						component="form"
+						onSubmit={handleSubmit}
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							gap: 2,
+							alignItems: 'end',
+						}}
+					>
+						<Typography>Add Photo</Typography>
+						<TextField
+							name="title"
+							label="Title"
+							value={state.title}
+							onChange={handleChange}
+							required
+						/>
+						<FileInput
+							onChange={handleImageChange}
+							label="Image"
+							name="image"
+						/>
+						<Button type="submit" disabled={isLoading}>
+							Save
+						</Button>
+					</Box>
+				</Protected>
+			</Grid>
+		</Grid>
 	);
 };
 
