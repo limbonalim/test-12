@@ -29,9 +29,12 @@ photoRouter.get('/user/:id', check, async (req: RequestWithUser, res, next) => {
 			return res.status(404).send({ message: 'Wrong ObjectId!' });
 		}
         
-		const result = await Photo.find({ author });
+		const result = await Photo.find({ author }).populate(
+			'author',
+			'displayName',
+		);
 		if (!result[0]) {
-			return res.status(404).send('Not found!');
+			return res.status(404).send({ message: 'Not found!' });
 		}
 		res.send(result);
 	} catch (e) {

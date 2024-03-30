@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { createPhoto, deletePhoto, getAll } from './photoThunks';
+import { createPhoto, deletePhoto, getAll, getByUser } from './photoThunks';
 import { IMyError, IPhoto, ValidationError } from '../../types';
 import { RootState } from '../../app/store';
 
@@ -86,6 +86,21 @@ const photoSlice = createSlice({
 				state.isCreateLoading = false;
 				state.createError = error || null;
 			});
+
+      bilder
+				.addCase(getByUser.pending, (state) => {
+					state.photo = [];
+					state.isLoading = true;
+					state.error = null;
+				})
+				.addCase(getByUser.fulfilled, (state, { payload: photo }) => {
+					state.photo = photo;
+					state.isLoading = false;
+				})
+				.addCase(getByUser.rejected, (state, { payload: error }) => {
+					state.isLoading = false;
+					state.error = error || null;
+				});
 	},
 });
 

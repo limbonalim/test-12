@@ -72,9 +72,6 @@ const PhotoDialog = () => {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<DialogTitle id="alert-dialog-title">
-					{photo?.author.displayName}
-				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
 						<img src={BASE_URL + photo?.image} alt={photo?.title} />

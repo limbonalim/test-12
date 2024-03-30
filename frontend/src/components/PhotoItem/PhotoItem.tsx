@@ -1,12 +1,24 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IPhoto } from '../../types';
 import { BASE_URL } from '../../constants';
 import { useAppDispatch } from '../../app/hooks';
 import { getCurrentPhoto, openDialog } from '../../feachers/Home/photoSlice';
 
-const PhotoItem: React.FC<IPhoto> = ({_id, author, title, image }) => {
+interface Props extends IPhoto {
+	showAuthor?: boolean;
+}
+
+const PhotoItem: React.FC<Props> = ({
+	_id,
+	author,
+	title,
+	image,
+	showAuthor,
+}) => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	const openDialogPhoto = () => {
 		dispatch(getCurrentPhoto(_id));
@@ -14,8 +26,8 @@ const PhotoItem: React.FC<IPhoto> = ({_id, author, title, image }) => {
 	};
 
 	const openAuthorPage = () => {
-
-	}
+		navigate(`/author/${author?._id}/${author?.displayName}`);
+	};
 
 	return (
 		<Box>
@@ -23,9 +35,11 @@ const PhotoItem: React.FC<IPhoto> = ({_id, author, title, image }) => {
 				<img src={BASE_URL + image} alt={title} />
 				<Typography>{title}</Typography>
 			</Box>
-			<Typography onClick={openAuthorPage}>
-				Author: {author.displayName}
-			</Typography>
+			{showAuthor ? (
+				<Typography onClick={openAuthorPage}>
+					Author: {author.displayName}
+				</Typography>
+			) : null}
 		</Box>
 	);
 };

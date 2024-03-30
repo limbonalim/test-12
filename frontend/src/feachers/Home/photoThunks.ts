@@ -58,3 +58,19 @@ export const createPhoto = createAsyncThunk<void, IFormPhoto, { rejectValue: Val
 		}
 	},
 );
+
+export const getByUser = createAsyncThunk<IPhoto[], string, { rejectValue: IMyError }>(
+	'photo/getByUser',
+	async (id, { rejectWithValue }) => {
+		try {
+			const response = await axiosApi.get<IPhoto[]>(`/photo/user/${id}`);
+			return response.data;
+		} catch (e) {
+			if (isAxiosError(e) && e.response && e.response.status === 404) {
+				return rejectWithValue(e.response.data);
+			}
+
+			throw e;
+		}
+	},
+);
