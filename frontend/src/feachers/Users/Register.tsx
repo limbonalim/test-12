@@ -78,8 +78,8 @@ const Register = () => {
 								type="email"
 								value={state.email}
 								onChange={onChange}
-								error={Boolean(getFieldError('username'))}
-								helperText={getFieldError('username')}
+								error={Boolean(getFieldError('email'))}
+								helperText={getFieldError('email')}
 								autoComplete="current-email"
 							/>
 						</Grid>
