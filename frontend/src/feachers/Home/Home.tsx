@@ -4,6 +4,7 @@ import { Alert, Box, Button, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getAll, getByUser } from './photoThunks';
 import {
+	selectCurretAuthor,
 	selectDeleteError,
 	selectError,
 	selectIsLoading,
@@ -18,6 +19,7 @@ const Home = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const user = useAppSelector(selectUser);
+	const author = useAppSelector(selectCurretAuthor);
 	const photo = useAppSelector(selectPhoto);
 	const isLoading = useAppSelector(selectIsLoading);
 	const error = useAppSelector(selectError);
@@ -66,7 +68,7 @@ const Home = () => {
 	if (name) {
 		authorName = (
 			<Box mb={2} display="flex" justifyContent="space-between">
-				<Typography variant="h4">{name}'s galery</Typography>
+				<Typography variant="h4">{author?.displayName}'s galery</Typography>
 				{id === user?._id ? (
 					<Button onClick={() => navigate('/new-photo')}>add new photo</Button>
 				) : null}

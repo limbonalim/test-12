@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { BASE_URL, Roles } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getCurrentPhoto, openDialog, selectIsDeleteLoading } from '../../feachers/Home/photoSlice';
+import { getCurrentAuthor, getCurrentPhoto, openDialog, selectIsDeleteLoading } from '../../feachers/Home/photoSlice';
 import { selectUser } from '../../feachers/Users/usersSlice';
 import {
 	deletePhoto,
@@ -49,6 +49,7 @@ const PhotoItem: React.FC<Props> = ({
 	};
 
 	const openAuthorPage = () => {
+		dispatch(getCurrentAuthor(author));
 		navigate(`/author/${author?._id}/${author?.displayName}`);
 	};
 

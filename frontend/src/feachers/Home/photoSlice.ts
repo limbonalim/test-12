@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { createPhoto, deletePhoto, getAll, getByUser } from './photoThunks';
-import { IMyError, IPhoto, ValidationError } from '../../types';
+import { IMyError, IPhoto, UserMutation, ValidationError } from '../../types';
 import { RootState } from '../../app/store';
 
 interface PhotoSlice {
@@ -13,6 +13,7 @@ interface PhotoSlice {
 	deleteError: IMyError | null;
 	isCreateLoading: boolean;
 	createError: ValidationError | null;
+	currentAuthor: UserMutation | null;
 }
 
 const initialState: PhotoSlice = {
@@ -25,6 +26,7 @@ const initialState: PhotoSlice = {
 	deleteError: null,
 	isCreateLoading: false,
 	createError: null,
+	currentAuthor: null
 };
 
 const photoSlice = createSlice({
@@ -44,6 +46,12 @@ const photoSlice = createSlice({
 				state.currentPhoto = state.photo[index];
 			}
 		},
+		getCurrentAuthor: (state, {payload: author}: PayloadAction<UserMutation>) => {
+			state.currentAuthor = author;
+		},
+		clearCurrentAuthor: (state) => {
+			state.currentAuthor = null;
+		}
 	},
 	extraReducers: (bilder) => {
 		bilder
@@ -117,7 +125,8 @@ export const selectDeleteError = (state: RootState) => state.photo.deleteError;
 
 export const selectIsCreateLoading = (state: RootState) => state.photo.isCreateLoading;
 export const selectCreateError = (state: RootState) => state.photo.createError;
+export const selectCurretAuthor = (state: RootState) => state.photo.currentAuthor;
 
-export const { openDialog, closeDialog, getCurrentPhoto } = photoSlice.actions;
+export const { openDialog, closeDialog, getCurrentPhoto, getCurrentAuthor, clearCurrentAuthor } = photoSlice.actions;
 
 export const photoReducer = photoSlice.reducer;
