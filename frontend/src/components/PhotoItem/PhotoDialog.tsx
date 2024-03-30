@@ -101,7 +101,11 @@ const PhotoDialog = () => {
 						<img src={BASE_URL + photo?.image} alt={photo?.title} />
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions>{deleteButton}</DialogActions>
+				<DialogActions
+					sx={{ background: 'rgba(40, 162, 227, 0.11390493697478987)' }}
+				>
+					{deleteButton}
+				</DialogActions>
 			</Dialog>
 		</>
 	);
