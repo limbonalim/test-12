@@ -3,10 +3,10 @@ import { Model } from 'mongoose';
 export interface IUserFields {
 	displayName: string;
 	email: string;
-	avatar: string;
+	avatar?: string;
 	password: string;
 	role: string;
-	googleID: string;
+	googleID?: string;
 	token: string;
 }
 

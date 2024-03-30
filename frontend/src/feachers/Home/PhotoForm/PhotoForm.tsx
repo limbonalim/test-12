@@ -1,11 +1,11 @@
 import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FileInput from '../../../components/UI/FileInput/FileInput';
 import Protected from '../../../components/UI/Protected/Protected';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { selectCreateError, selectIsCreateLoading } from '../photoSlice';
 import { createPhoto, getAll } from '../photoThunks';
-import { useNavigate } from 'react-router-dom';
 
 export interface IFormPhoto {
 	title: string;

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, Menu, MenuItem } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAppDispatch } from '../../app/hooks.ts';
 import { logout } from '../../feachers/Users/usersThunks.ts'
-import type { IUser } from '../../types';
 import { BASE_URL } from '../../constants.ts';
-import { useNavigate } from 'react-router-dom';
+import type { IUser } from '../../types';
+
 
 interface Props {
   user: IUser;

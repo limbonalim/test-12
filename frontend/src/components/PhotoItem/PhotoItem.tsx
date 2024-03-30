@@ -4,7 +4,6 @@ import {
 	useLocation,
 	useNavigate,
 } from 'react-router-dom';
-import { IPhoto } from '../../types';
 import { BASE_URL, Roles } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getCurrentPhoto, openDialog, selectIsDeleteLoading } from '../../feachers/Home/photoSlice';
@@ -14,6 +13,7 @@ import {
 	getAll,
 	getByUser,
 } from '../../feachers/Home/photoThunks';
+import type { IPhoto } from '../../types';
 
 interface Props extends IPhoto {
 	showAuthor?: boolean;
