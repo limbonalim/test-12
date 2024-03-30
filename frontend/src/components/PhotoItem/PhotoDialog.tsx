@@ -10,8 +10,8 @@ import { BASE_URL, Roles } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
 	closeDialog,
-	openDialog,
 	selectCurrentPhoto,
+	selectIsDeleteLoading,
 	selectIsOpenDialog,
 } from '../../feachers/Home/photoSlice';
 import { selectUser } from '../../feachers/Users/usersSlice';
@@ -22,11 +22,8 @@ const PhotoDialog = () => {
 	const open = useAppSelector(selectIsOpenDialog);
 	const photo = useAppSelector(selectCurrentPhoto);
 	const user = useAppSelector(selectUser);
+  const isDeleteLoading = useAppSelector(selectIsDeleteLoading);
 	let deleteButton;
-
-	const handleClickOpen = () => {
-		dispatch(openDialog());
-	};
 
 	const handleClose = () => {
 		dispatch(closeDialog());
@@ -40,7 +37,12 @@ const PhotoDialog = () => {
 
 	if (user?.role === Roles.admin || photo?.author._id === user?._id) {
 		deleteButton = (
-			<Button onClick={handleDelete} variant="outlined" color="error">
+			<Button
+				onClick={handleDelete}
+				variant="outlined"
+				color="error"
+				disabled={isDeleteLoading}
+			>
 				Delete
 			</Button>
 		);
