@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Alert, Box } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getAll } from './photoThunks';
-import { selectError, selectIsLoading, selectPhoto } from './photoSlice';
+import { selectDeleteError, selectError, selectIsLoading, selectPhoto } from './photoSlice';
 import PhotoItem from '../../components/PhotoItem/PhotoItem';
 import Loader from '../../components/UI/Loader/Loader';
 import PhotoDialog from '../../components/PhotoItem/PhotoDialog';
@@ -12,6 +12,8 @@ const Home = () => {
 	const photo = useAppSelector(selectPhoto);
 	const isLoading = useAppSelector(selectIsLoading);
 	const error = useAppSelector(selectError);
+	const deleteError = useAppSelector(selectDeleteError);
+	const componentError = error || deleteError;
 	let render;
 	useEffect(() => {
 		dispatch(getAll());
@@ -31,9 +33,9 @@ const Home = () => {
 
 	return (
 		<>
-			{error && (
+			{componentError && (
 				<Alert security="error" sx={{ mb: 2 }}>
-					{error.message}
+					{componentError.message}
 				</Alert>
 			)}
 			{isLoading ? (
@@ -43,7 +45,7 @@ const Home = () => {
 					{render}
 				</Box>
 			)}
-			<PhotoDialog/>
+			<PhotoDialog />
 		</>
 	);
 };
