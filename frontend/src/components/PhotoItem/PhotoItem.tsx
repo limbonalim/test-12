@@ -1,12 +1,14 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import React from 'react';
-import {
-	useLocation,
-	useNavigate,
-} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BASE_URL, Roles } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getCurrentAuthor, getCurrentPhoto, openDialog, selectIsDeleteLoading } from '../../feachers/Home/photoSlice';
+import {
+	getCurrentAuthor,
+	getCurrentPhoto,
+	openDialog,
+	selectIsDeleteLoading,
+} from '../../feachers/Home/photoSlice';
 import { selectUser } from '../../feachers/Users/usersSlice';
 import {
 	deletePhoto,
@@ -67,15 +69,19 @@ const PhotoItem: React.FC<Props> = ({
 	}
 
 	return (
-		<Box>
+		<Box sx={{ maxWidth: '300px' }}>
 			<Box onClick={openDialogPhoto}>
-				<img src={BASE_URL + image} alt={title} />
+				<img
+					src={BASE_URL + image}
+					alt={title}
+					style={{ borderRadius: '15px', maxWidth: '300px' }}
+				/>
 				<Typography>{title}</Typography>
 			</Box>
 			{showAuthor ? (
-				<Typography onClick={openAuthorPage}>
+				<Link onClick={openAuthorPage} sx={{ cursor: 'pointer' }}>
 					Author: {author.displayName}
-				</Typography>
+				</Link>
 			) : null}
 			{deleteButton}
 		</Box>

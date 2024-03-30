@@ -88,7 +88,14 @@ const Home = () => {
 			) : (
 				<>
 					{authorName}
-					<Box display="flex" sx={{ gap: 2, flexWrap: 'wrap' }}>
+					<Box
+						display="grid"
+						sx={{
+							gap: 2,
+							flexWrap: 'wrap',
+							gridTemplateColumns: 'repeat(3, 300px)',
+						}}
+					>
 						{render}
 					</Box>
 				</>
