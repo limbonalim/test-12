@@ -93,7 +93,7 @@ const Home = () => {
 						sx={{
 							gap: 2,
 							flexWrap: 'wrap',
-							gridTemplateColumns: 'repeat(3, 300px)',
+							gridTemplateColumns: 'repeat(auto-fill, 300px)',
 						}}
 					>
 						{render}
