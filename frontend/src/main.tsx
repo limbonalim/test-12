@@ -10,6 +10,7 @@ import { persistor, store } from './app/store.ts';
 import theme from './theme.ts';
 import { addInterceptors } from './axiosApi.ts';
 import { GOOGLE_CLIENT_ID } from './constants.ts';
+import './index.css';
 
 addInterceptors(store);
 
