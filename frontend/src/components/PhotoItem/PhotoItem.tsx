@@ -79,7 +79,11 @@ const PhotoItem: React.FC<Props> = ({
 				<Typography>{title}</Typography>
 			</Box>
 			{showAuthor ? (
-				<Link onClick={openAuthorPage} sx={{ cursor: 'pointer' }}>
+				<Link
+					onClick={openAuthorPage}
+					underline="hover"
+					sx={{ cursor: 'pointer' }}
+				>
 					Author: {author.displayName}
 				</Link>
 			) : null}
