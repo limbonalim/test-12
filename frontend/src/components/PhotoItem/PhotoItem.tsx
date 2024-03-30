@@ -16,7 +16,7 @@ import {
 	getByUser,
 } from '../../feachers/Home/photoThunks';
 import type { IPhoto } from '../../types';
-import './PhotoItem.css'
+import './PhotoItem.css';
 
 interface Props extends IPhoto {
 	showAuthor?: boolean;
@@ -63,6 +63,7 @@ const PhotoItem: React.FC<Props> = ({
 				variant="outlined"
 				color="error"
 				disabled={isDeleteLoading}
+				sx={{ display: 'block', mt: 1 }}
 			>
 				Delete
 			</Button>
@@ -72,11 +73,7 @@ const PhotoItem: React.FC<Props> = ({
 	return (
 		<Box sx={{ maxWidth: '300px' }}>
 			<Box onClick={openDialogPhoto}>
-				<img
-					src={BASE_URL + image}
-					alt={title}
-					className='PhotoItem-image'
-				/>
+				<img src={BASE_URL + image} alt={title} className="PhotoItem-image" />
 				<Typography>{title}</Typography>
 			</Box>
 			{showAuthor ? (
