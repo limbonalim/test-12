@@ -1,7 +1,6 @@
 import { Model } from 'mongoose';
 
 export interface IUserFields {
-	username: string;
 	displayName: string;
 	email: string;
 	avatar: string;
@@ -18,3 +17,10 @@ export interface IUserMethods {
 
 export type IUserModel = Model<IUserFields, unknown, IUserMethods>;
 
+export interface IPhotoFields {
+	author: Schema.Types.ObjectId;
+	title: string;
+	image: string;
+}
+
+export type IPhotoModel = Model<IPhotoFields, unknown, unknown>;
