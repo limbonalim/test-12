@@ -67,7 +67,14 @@ const PhotoDialog = () => {
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<AppBar sx={{ position: 'relative' }}>
+				<AppBar
+					sx={{
+						position: 'relative',
+						background:
+							'linear-gradient(90deg, rgba(16,164,96,0.321187850140056) 0%, rgba(19,133,164,0.3968181022408963) 35%, rgba(0,212,255,0.41642594537815125) 100%)',
+						color: 'inherit',
+					}}
+				>
 					<Toolbar>
 						<IconButton
 							edge="start"
@@ -82,7 +89,14 @@ const PhotoDialog = () => {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<DialogContent>
+				<DialogContent
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						background: 'rgba(40, 162, 227, 0.11390493697478987)',
+					}}
+				>
 					<DialogContentText id="alert-dialog-description">
 						<img src={BASE_URL + photo?.image} alt={photo?.title} />
 					</DialogContentText>
