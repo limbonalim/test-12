@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
-import { IMyError, IPhoto } from '../../types';
+import { IMyError, IPhoto, ValidationError } from '../../types';
 import axiosApi from '../../axiosApi';
+import { IFormPhoto } from './PhotoForm/PhotoForm';
 
 export const getAll = createAsyncThunk<
 	IPhoto[],
@@ -27,6 +28,29 @@ export const deletePhoto = createAsyncThunk<void, string, { rejectValue: IMyErro
 			await axiosApi.delete(`/photo/${id}`);
 		} catch (e) {
 			if (isAxiosError(e) && e.response && (e.response.status === 400 || e.response.status === 404)) {
+				return rejectWithValue(e.response.data);
+			}
+
+			throw e;
+		}
+	},
+);
+
+export const createPhoto = createAsyncThunk<void, IFormPhoto, { rejectValue: ValidationError }>(
+	'photo/createPhoto',
+	async (data, { rejectWithValue }) => {
+		try {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      
+      if (data.image) formData.append('image', data.image);
+			await axiosApi.post(`/photo`, formData);
+		} catch (e) {
+			if (
+				isAxiosError(e) &&
+				e.response &&
+				e.response.status === 422
+			) {
 				return rejectWithValue(e.response.data);
 			}
 

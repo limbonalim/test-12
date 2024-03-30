@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import { promises as fs } from 'fs';
 import { randomUUID } from 'crypto';
-import config from '../../spotify/api/config';
+import config from './config';
 
 const imageStorage = multer.diskStorage({
 	destination: async (_r, _f, cb) => {

@@ -4,6 +4,7 @@ import Home from './feachers/Home/Home.tsx';
 import NotFound from './components/UI/Not-Found/NotFound.tsx';
 import Register from './feachers/Users/Register.tsx';
 import Login from './feachers/Users/Login.tsx';
+import PhotoForm from './feachers/Home/PhotoForm/PhotoForm.tsx';
 
 const App = () => {
 	return (
@@ -13,6 +14,7 @@ const App = () => {
 					<Route path="/" element={<Home />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/login" element={<Login />} />
+					<Route path="/new-photo" element={<PhotoForm />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Layout>

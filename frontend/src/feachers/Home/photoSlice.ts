@@ -1,26 +1,30 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { deletePhoto, getAll } from './photoThunks';
-import { IMyError, IPhoto } from '../../types';
+import { createPhoto, deletePhoto, getAll } from './photoThunks';
+import { IMyError, IPhoto, ValidationError } from '../../types';
 import { RootState } from '../../app/store';
 
 interface PhotoSlice {
 	photo: IPhoto[];
 	isLoading: boolean;
 	error: IMyError | null;
-  isOpenDialog: boolean;
-  currentPhoto: IPhoto | null;
-  isDeleteLoading: boolean;
-  deleteError: IMyError | null;
+	isOpenDialog: boolean;
+	currentPhoto: IPhoto | null;
+	isDeleteLoading: boolean;
+	deleteError: IMyError | null;
+	isCreateLoading: boolean;
+	createError: ValidationError | null;
 }
 
 const initialState: PhotoSlice = {
 	photo: [],
 	isLoading: false,
 	error: null,
-  isOpenDialog: false,
-  currentPhoto: null,
-  isDeleteLoading: false,
-  deleteError: null,
+	isOpenDialog: false,
+	currentPhoto: null,
+	isDeleteLoading: false,
+	deleteError: null,
+	isCreateLoading: false,
+	createError: null,
 };
 
 const photoSlice = createSlice({
@@ -32,14 +36,14 @@ const photoSlice = createSlice({
 		},
 		closeDialog: (state) => {
 			state.isOpenDialog = false;
-      state.currentPhoto = null;
+			state.currentPhoto = null;
 		},
-    getCurrentPhoto: (state, {payload: id}: PayloadAction<string>) => {
-      const index = state.photo.findIndex((item) => item._id === id);
-      if (index >= 0) {
-        state.currentPhoto = state.photo[index];
-      }
-    }
+		getCurrentPhoto: (state, { payload: id }: PayloadAction<string>) => {
+			const index = state.photo.findIndex((item) => item._id === id);
+			if (index >= 0) {
+				state.currentPhoto = state.photo[index];
+			}
+		},
 	},
 	extraReducers: (bilder) => {
 		bilder
@@ -57,26 +61,47 @@ const photoSlice = createSlice({
 				state.error = error || null;
 			});
 
-      bilder
-				.addCase(deletePhoto.pending, (state) => {
-					state.isDeleteLoading = true;
-					state.error = null;
-				})
-				.addCase(deletePhoto.rejected, (state, { payload: error }) => {
-					state.isDeleteLoading = false;
-					state.deleteError = error || null;
-				});
+		bilder
+			.addCase(deletePhoto.pending, (state) => {
+				state.isDeleteLoading = true;
+				state.error = null;
+			})
+			.addCase(deletePhoto.fulfilled, (state) => {
+				state.isDeleteLoading = false;
+			})
+			.addCase(deletePhoto.rejected, (state, { payload: error }) => {
+				state.isDeleteLoading = false;
+				state.deleteError = error || null;
+			});
+
+		bilder
+			.addCase(createPhoto.pending, (state) => {
+				state.isCreateLoading = true;
+				state.createError = null;
+			})
+			.addCase(createPhoto.fulfilled, (state) => {
+				state.isCreateLoading = false;
+			})
+			.addCase(createPhoto.rejected, (state, { payload: error }) => {
+				state.isCreateLoading = false;
+				state.createError = error || null;
+			});
 	},
 });
 
 export const selectPhoto = (state: RootState) => state.photo.photo;
 export const selectIsLoading = (state: RootState) => state.photo.isLoading;
 export const selectError = (state: RootState) => state.photo.error;
-export const selectIsOpenDialog = (state: RootState) => state.photo.isOpenDialog;
-export const selectCurrentPhoto = (state: RootState) => state.photo.currentPhoto;
-
-export const selectIsDeleteLoading = (state: RootState) => state.photo.isDeleteLoading;
+export const selectIsOpenDialog = (state: RootState) =>
+	state.photo.isOpenDialog;
+export const selectCurrentPhoto = (state: RootState) =>
+	state.photo.currentPhoto;
+export const selectIsDeleteLoading = (state: RootState) =>
+	state.photo.isDeleteLoading;
 export const selectDeleteError = (state: RootState) => state.photo.deleteError;
+
+export const selectIsCreateLoading = (state: RootState) => state.photo.isCreateLoading;
+export const selectCreateError = (state: RootState) => state.photo.createError;
 
 export const { openDialog, closeDialog, getCurrentPhoto } = photoSlice.actions;
 
