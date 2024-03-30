@@ -1,0 +1,8 @@
+.PhotoItem-image {
+	border-radius: 15px;
+	max-width: 300px;
+}
+
+.PhotoItem-image:hover {
+	transform: scale(1.01);
+}

@@ -16,6 +16,7 @@ import {
 	getByUser,
 } from '../../feachers/Home/photoThunks';
 import type { IPhoto } from '../../types';
+import './PhotoItem.css'
 
 interface Props extends IPhoto {
 	showAuthor?: boolean;
@@ -74,7 +75,7 @@ const PhotoItem: React.FC<Props> = ({
 				<img
 					src={BASE_URL + image}
 					alt={title}
-					style={{ borderRadius: '15px', maxWidth: '300px' }}
+					className='PhotoItem-image'
 				/>
 				<Typography>{title}</Typography>
 			</Box>
