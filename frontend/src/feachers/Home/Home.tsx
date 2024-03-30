@@ -5,6 +5,7 @@ import { getAll } from './photoThunks';
 import { selectError, selectIsLoading, selectPhoto } from './photoSlice';
 import PhotoItem from '../../components/PhotoItem/PhotoItem';
 import Loader from '../../components/UI/Loader/Loader';
+import PhotoDialog from '../../components/PhotoItem/PhotoDialog';
 
 const Home = () => {
 	const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const Home = () => {
 	useEffect(() => {
 		dispatch(getAll());
 	}, []);
-	
+
 	if (photo) {
 		render = photo.map(({ _id, author, title, image }) => (
 			<PhotoItem
@@ -42,6 +43,7 @@ const Home = () => {
 					{render}
 				</Box>
 			)}
+			<PhotoDialog/>
 		</>
 	);
 };
