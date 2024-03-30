@@ -1,10 +1,10 @@
+import { useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import { BASE_URL, Roles } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -15,14 +15,19 @@ import {
 	selectIsOpenDialog,
 } from '../../feachers/Home/photoSlice';
 import { selectUser } from '../../feachers/Users/usersSlice';
-import { deletePhoto, getAll } from '../../feachers/Home/photoThunks';
+import {
+	deletePhoto,
+	getAll,
+	getByUser,
+} from '../../feachers/Home/photoThunks';
 
 const PhotoDialog = () => {
 	const dispatch = useAppDispatch();
 	const open = useAppSelector(selectIsOpenDialog);
 	const photo = useAppSelector(selectCurrentPhoto);
 	const user = useAppSelector(selectUser);
-  const isDeleteLoading = useAppSelector(selectIsDeleteLoading);
+	const { pathname } = useLocation();
+	const isDeleteLoading = useAppSelector(selectIsDeleteLoading);
 	let deleteButton;
 
 	const handleClose = () => {
@@ -32,7 +37,12 @@ const PhotoDialog = () => {
 	const handleDelete = async () => {
 		handleClose();
 		await dispatch(deletePhoto(photo?._id || '')).unwrap();
-		dispatch(getAll());
+		if (pathname === '/') {
+			await dispatch(getAll()).unwrap();
+		} else {
+			const path = pathname.split('/');
+			await dispatch(getByUser(path[2])).unwrap();
+		}
 	};
 
 	if (user?.role === Roles.admin || photo?.author._id === user?._id) {
